@@ -1,4 +1,4 @@
-userinput = int(input("Input integer and I will return Divisors"))
+userinput = int(input("This program returns the divisors of input value. Enter integer: "))
 
 divisors = []
 

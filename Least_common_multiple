@@ -1,0 +1,23 @@
+
+#userinput1 = int(input("This program returns the LCM of two integers, Enter first integer: "))
+#userinput2 = int(input("Enter second integer: "))
+
+userinput1 = 4
+userinput2 = 6
+
+multiples1 = [userinput1]
+multiples2 = [userinput2]
+
+counter1 = 1
+counter2 = 1
+
+while (multiples1[counter1 - 1] in multiples2) and (multiples2[counter2 - 1] in multiples1) == False :
+    value1 = userinput1 * (counter1+1)
+    value2 = userinput2 * (counter1+1)
+    multiples1.append(value1)
+    multiples2.append(value2)
+    counter1 = counter1 + 1
+    counter2 = counter2 + 1
+
+print(multiples1)
+print(multiples2)
