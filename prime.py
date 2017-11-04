@@ -1,5 +1,5 @@
 #Ask user for Inputs
-userinput1 = int(input("This program evaluates primality, Enter an integer greater than 0: "))
+userinput1 = int(input("This program determines primality. Enter an integer greater than 0: "))
 
 #Define function that returns divisors of a number
 def divisor(number):
