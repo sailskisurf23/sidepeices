@@ -1,4 +1,6 @@
-import random
+import random, sys
+from copy import deepcopy
+
 
 def lets_play():
     """Ask the user if they want to play.
@@ -7,7 +9,6 @@ def lets_play():
     playagain = 'y'
     while playagain == 'y':
         playagain = input("Would you like to play a game of Tic Tac Toe? (y/n): ")
-        personorcomp = 1
         if playagain == 'y':
             print("Yay let's play!")
             pvp_pvc = int(input("Would you like to play a person or a computer? (Enter '1' for a person, '2' for a computer): "))
@@ -19,7 +20,6 @@ def lets_play():
         elif playagain == 'n':
             print("Goodbye!")
             sys.exit()
-            break
         else:
             print("Error: Please enter 'y' to play again or 'n'")
             lets_play()
@@ -84,7 +84,7 @@ def play_square(squareplayed, board, XorO):
     elif squareplayed == 9:
         board[2][2] = XorO
     else:
-        print("play_square ERROR")
+        raise RuntimeError("")
     return board
 
 def is_winner(b,winner):
@@ -121,11 +121,14 @@ def computer_move(freesquares,board,winner,XorO):
     """Returns an integer with the computer's move
     freesquares: list"""
     winmove = winning_move(freesquares,board,winner,XorO)
+    losemove = prevent_win(freesquares,board,winner,XorO)
     randmove = random_move(freesquares)
     if winmove > 0:
         comp_move = winmove
+    elif losemove > 0:
+        comp_move = losemove
     else:
-        comp_move = random_move
+        comp_move = randmove
     return comp_move
 
 def random_move(freesquares):
@@ -139,15 +142,27 @@ def winning_move(freesquares,board,winner,XorO):
     """Returns an integer by selecting a square which would result in computer win (computer is 'O')"""
     winmove = 0
     for square in freesquares:
-        boardposs = play_square(square,board.copy(),XorO)
-        if is_winner(boardposs,winner) == XorO:
+        copyboard = deepcopy(board)
+        boardposs = play_square(square,copyboard,XorO)
+        won = is_winner(boardposs,winner) == XorO
+        if won:
             winmove = square
             return winmove
     return winmove
 
-def prevent_win():
+def prevent_win(freesquares,board,winner,XorO):
     """Returns an integer by selecting a square which would prevent player win (player is 'X')"""
-    pass
+    losemove = 0
+    if XorO == 'X': notXorO = 'O'
+    elif XorO == 'O': notXorO = 'X'
+    for square in freesquares:
+        copyboard = deepcopy(board)
+        boardposs = play_square(square,copyboard,notXorO)
+        lose = is_winner(boardposs,winner) == notXorO
+        if lose:
+            losemove = square
+            return losemove
+    return losemove
 
 king = """
 
@@ -234,3 +249,6 @@ if __name__ == '__main__':
             print("")
             print(f"{winner} is the KING OF THE WORLD!!!")
             print(king)
+
+            
+
