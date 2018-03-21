@@ -25,6 +25,6 @@ def runsim(num,switch=False):
             winners +=1
     return contestants, winners
 
-contestants, winners = runsim(10000,True)
+contestants, winners = runsim(10000,False)
 
 print(f"Out of {contestants} contestants, there were {winners} winners")
