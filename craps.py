@@ -30,7 +30,7 @@ def play_craps():
             elif roll_again == 7:
                 return False
 
-def play_lotsa_craps(n=1000):
+def play_lotsa_craps(n=100000):
     return np.mean([play_craps() for i in range(n)])
 
-print(roll())
+print(play_lotsa_craps())
